@@ -1,0 +1,37 @@
+$date
+   Mon Jan 1 00:00:00 2025
+$end
+$version
+   Test VCD
+$end
+$timescale
+   1 ns
+$end
+$scope module tb $end
+$var wire 1 a a $end
+$var wire 1 b b $end
+$var reg 1 clk clk $end
+$upscope $end
+$enddefinitions $end
+$dumpvars
+0a
+0b
+0clk
+$end
+#10
+1a
+1clk
+#20
+0a
+0clk
+#30
+1a
+1b
+1clk
+#40
+0a
+0b
+0clk
+#50
+1a
+1clk

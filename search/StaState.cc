@@ -55,6 +55,7 @@ StaState::StaState() :
   variables_(nullptr),
   thread_count_(1),
   dispatch_queue_(nullptr),
+  waveform_store_(nullptr),
   sigma_factor_(1.0)
 {
 }

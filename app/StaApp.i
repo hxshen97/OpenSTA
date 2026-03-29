@@ -33,6 +33,7 @@
 %include "network/NetworkEdit.i"
 %include "parasitics/Parasitics.i"
 %include "power/Power.i"
+%include "waveform/Waveform.i"
 %include "sdc/Sdc.i"
 %include "sdf/Sdf.i"
 %include "search/Search.i"

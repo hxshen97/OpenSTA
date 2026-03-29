@@ -1,0 +1,102 @@
+#!/bin/bash
+#
+# pre-push hook: squash commits ahead of remote into one,
+#                and generate update documentation in docs/commit/
+#
+# Setup:
+#   git config core.hooksPath githooks
+#
+
+# Read push info from stdin
+while read local_ref local_sha remote_ref remote_sha; do
+    # Skip branch deletions
+    if [ "$local_sha" = "0000000000000000000000000000000000000000" ]; then
+        continue
+    fi
+
+    # Get current branch name
+    branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) || continue
+
+    # Get remote tracking branch
+    upstream=$(git rev-parse --abbrev-ref "@{upstream}" 2>/dev/null) || {
+        echo "[pre-push] No upstream branch for '$branch', skipping"
+        continue
+    }
+
+    # Count commits ahead of upstream
+    ahead=$(git rev-list --count "${upstream}..HEAD" 2>/dev/null) || continue
+
+    if [ "$ahead" -le 1 ]; then
+        # Nothing to squash, proceed with push
+        continue
+    fi
+
+    echo "============================================"
+    echo "[pre-push] Found $ahead commit(s) ahead of $upstream"
+    echo "[pre-push] Squashing commits..."
+    echo "============================================"
+
+    # --- Collect info BEFORE squashing ---
+    commit_messages=$(git log "${upstream}..HEAD" --format="- %s")
+    diff_stat=$(git diff --stat "${upstream}..HEAD")
+    diff_files=$(git diff --name-only "${upstream}..HEAD")
+
+    # --- Squash: soft reset to upstream, then create single commit ---
+    git reset --soft "${upstream}"
+
+    title="feat: squash $ahead commits on $branch"
+    git commit -m "$title" -m "Changes:" -m "$commit_messages"
+
+    echo "[pre-push] Squashed $ahead commits into 1"
+
+    # --- Generate documentation ---
+    new_sha=$(git rev-parse HEAD)
+    short_sha=$(git rev-parse --short HEAD)
+    timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+    date_str=$(date "+%Y%m%d_%H%M%S")
+
+    doc_dir="docs/commit"
+    mkdir -p "$doc_dir"
+    doc_file="${doc_dir}/${date_str}_${short_sha}.md"
+
+    cat > "$doc_file" << DOCEOF
+# 更新日志
+
+## 基本信息
+- **时间**: ${timestamp}
+- **Commit ID**: ${new_sha}
+- **短 ID**: ${short_sha}
+- **分支**: ${branch}
+- **合并提交数**: ${ahead}
+
+## 特性/功能
+${commit_messages}
+
+## 文件变更统计
+\`\`\`
+${diff_stat}
+\`\`\`
+
+## 变更文件列表
+${diff_files}
+DOCEOF
+
+    echo "[pre-push] 文档已生成: $doc_file"
+
+    # Add doc file to the squashed commit
+    git add "$doc_file"
+    git commit --amend --no-edit
+
+    echo "============================================"
+    echo "[pre-push] 完成:"
+    echo "  - $ahead 个提交已合并为 1 个"
+    echo "  - 更新文档: $doc_file"
+    echo ""
+    echo "[pre-push] 请再次执行 'git push' 完成推送"
+    echo "============================================"
+
+    exit 1  # Abort current push, user needs to push again
+
+done
+
+exit 0

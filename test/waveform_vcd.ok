@@ -1,0 +1,41 @@
+Loaded 3 pin waveforms.
+Waveform Summary:
+  Time range: 0 - 50
+  Pins: 3
+    clk                                      5 transitions
+    b                                        2 transitions
+    a                                        5 transitions
+  Total transitions: 12
+Pin clk: 5 transitions
+  time=10 0->1
+  time=20 1->0
+  time=30 0->1
+  time=40 1->0
+  time=50 0->1
+Pin a: 5 transitions
+  time=10 0->1
+  time=20 1->0
+  time=30 0->1
+  time=40 1->0
+  time=50 0->1
+Pin b: 2 transitions
+  time=30 0->1
+  time=40 1->0
+Pin clk: 3 transitions
+  time=10 0->1
+  time=20 1->0
+  time=30 0->1
+Waveform for clk:
+  10: 0 -> 1
+  20: 1 -> 0
+  30: 0 -> 1
+  40: 1 -> 0
+  50: 0 -> 1
+clk@15=1
+a@5=0
+a@25=0
+Warning: pin nonexist not found.
+Waveform Summary:
+  Time range: 9223372036854775807 - -9223372036854775808
+  Pins: 0
+  Total transitions: 0

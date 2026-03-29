@@ -46,6 +46,7 @@ class Latches;
 class ClkNetwork;
 class DispatchQueue;
 class Variables;
+class SignalWaveformStore;
 
 // Most STA components use functionality in other components.
 // This class simplifies the process of copying pointers to the
@@ -108,6 +109,8 @@ public:
   bool crprActive() const;
   Variables *variables() { return variables_; }
   const Variables *variables() const { return variables_; }
+  SignalWaveformStore *waveformStore() { return waveform_store_; }
+  SignalWaveformStore *waveformStore() const { return waveform_store_; }
   // Edge is default cond disabled by timing_disable_cond_default_arcs var.
   bool isDisabledCondDefault(Edge *edge) const;
 
@@ -131,6 +134,7 @@ protected:
   Latches *latches_;
   ClkNetwork *clk_network_;
   Variables *variables_;
+  SignalWaveformStore *waveform_store_;
   int thread_count_;
   DispatchQueue *dispatch_queue_;
   float sigma_factor_;

@@ -168,6 +168,7 @@ record_public_tests {
   suppress_msg
   verilog_attribute
   verilog_specify
+  waveform_vcd
 }
 
 define_test_group fast [group_tests all]

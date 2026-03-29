@@ -78,6 +78,7 @@
 #include "Genclks.hh"
 #include "ClkNetwork.hh"
 #include "power/Power.hh"
+#include "waveform/SignalWaveformClass.hh"
 #include "VisitPathEnds.hh"
 #include "PathExpanded.hh"
 #include "MakeTimingModel.hh"
@@ -315,6 +316,7 @@ Sta::makeComponents()
   makeSdcNetwork();
   makeReportPath();
   makePower();
+  makeWaveformStore();
   makeClkSkews();
 
   setCmdNamespace1(CmdNamespace::sdc);
@@ -522,6 +524,12 @@ Sta::makePower()
 }
 
 void
+Sta::makeWaveformStore()
+{
+  waveform_store_ = new SignalWaveformStore();
+}
+
+void
 Sta::makeVariables()
 {
   variables_ = new Variables();
@@ -573,6 +581,7 @@ Sta::~Sta()
   delete report_;
   delete clk_network_;
   delete power_;
+  delete waveform_store_;
   delete equiv_cells_;
   delete dispatch_queue_;
 }

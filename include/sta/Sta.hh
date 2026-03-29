@@ -68,6 +68,7 @@ class Corner;
 class ClkSkews;
 class ReportField;
 class EquivCells;
+class SignalWaveformStore;
 
 typedef InstanceSeq::Iterator SlowDrvrIterator;
 typedef Vector<const char*> CheckError;
@@ -1367,6 +1368,7 @@ protected:
   virtual void makeCheckMaxSkews();
   virtual void makeReportPath();
   virtual void makePower();
+  virtual void makeWaveformStore();
   virtual void makeClkSkews();
   virtual void makeObservers();
   NetworkEdit *networkCmdEdit();

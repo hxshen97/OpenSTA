@@ -138,7 +138,10 @@ set(STA_SOURCE
   power/VcdReader.cc
   power/SaifReader.cc
   power/VcdParse.cc
-  
+
+  waveform/SignalWaveform.cc
+  waveform/WaveformReader.cc
+
   sdc/Clock.cc
   sdc/ClockGatingCheck.cc
   sdc/ClockGroups.cc
@@ -252,6 +255,7 @@ set(STA_TCL_FILES
   network/NetworkEdit.tcl
   parasitics/Parasitics.tcl
   power/Power.tcl
+  waveform/Waveform.tcl
   sdc/Sdc.tcl
   sdf/Sdf.tcl
   search/Search.tcl
@@ -431,6 +435,7 @@ set(SWIG_FILES
   ${STA_HOME}/tcl/StaTclTypes.i
   ${STA_HOME}/util/Util.i
   ${STA_HOME}/verilog/Verilog.i
+  ${STA_HOME}/waveform/Waveform.i
   )
 
 set_property(SOURCE ${STA_SWIG_FILE}
