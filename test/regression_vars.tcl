@@ -169,6 +169,7 @@ record_public_tests {
   verilog_attribute
   verilog_specify
   waveform_vcd
+  waveform_propagate
 }
 
 define_test_group fast [group_tests all]

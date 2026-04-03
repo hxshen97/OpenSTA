@@ -1,0 +1,50 @@
+Startpoint: r2 (rising edge-triggered flip-flop clocked by clk1)
+Endpoint: r3 (rising edge-triggered flip-flop clocked by clk1)
+Path Group: clk1
+Path Type: max
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock clk1 (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   0.00    0.00 ^ r2/CLK (DFFHQx4_ASAP7_75t_R)
+  64.76   64.76 ^ r2/Q (DFFHQx4_ASAP7_75t_R)
+  16.47   81.23 ^ u1/Y (BUFx2_ASAP7_75t_R)
+  17.81   99.05 ^ u2/Y (AND2x2_ASAP7_75t_R)
+   0.00   99.05 ^ r3/D (DFFHQx4_ASAP7_75t_R)
+          99.05   data arrival time
+
+1000.00 1000.00   clock clk1 (rise edge)
+   0.00 1000.00   clock network delay (ideal)
+   0.00 1000.00   clock reconvergence pessimism
+        1000.00 ^ r3/CLK (DFFHQx4_ASAP7_75t_R)
+ -12.79  987.21   library setup time
+         987.21   data required time
+---------------------------------------------------------
+         987.21   data required time
+         -99.05   data arrival time
+---------------------------------------------------------
+         888.17   slack (MET)
+
+
+Loaded 7 pin waveforms.
+Waveform propagation: seeding from VCD data...
+Waveform propagation: processing 26 seed events...
+Waveform propagation complete:
+  Events processed: 29
+  VCD seeded pins: 7
+  Propagated driver events: 29
+  Clock edges: 0
+Waveform Summary:
+  Time range: 0 - 800
+  Pins: 9
+    u2/Y                                     2 transitions
+    u1/Y                                     1 transitions
+    r1/Q                                     4 transitions
+    clk3                                     12 transitions
+    clk2                                     12 transitions
+    r2/Q                                     2 transitions
+    clk1                                     12 transitions
+    in2                                      4 transitions
+    in1                                      6 transitions
+  Total transitions: 55
