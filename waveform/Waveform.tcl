@@ -123,4 +123,21 @@ proc remove_waveform { args } {
   sta::remove_waveform_data
 }
 
+################################################################
+
+define_cmd_args "propagate_waveform" { [-min_max min_max] }
+
+proc propagate_waveform { args } {
+  parse_key_args "propagate_waveform" args \
+    keys {-min_max} flags {}
+
+  check_argc_eq0 "propagate_waveform" $args
+
+  set min_max "max"
+  if { [info exists keys(-min_max)] } {
+    set min_max $keys(-min_max)
+  }
+  propagate_waveform_cmd $min_max
+}
+
 } ; # namespace eval sta

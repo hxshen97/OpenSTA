@@ -19,6 +19,14 @@
 #include "waveform/SignalWaveformClass.hh"
 #include "power/VcdParse.hh"
 #include "waveform/WaveformReader.hh"
+// Tcl.h defines CONST as a macro, which conflicts with AigNodeType enum values.
+#ifdef CONST
+#undef CONST
+#include "waveform/WaveformPropagate.hh"
+#define CONST const
+#else
+#include "waveform/WaveformPropagate.hh"
+#endif
 
 using namespace sta;
 
@@ -159,6 +167,24 @@ get_waveform_value_cmd(const char *pin_name,
   result[0] = value;
   result[1] = '\0';
   return result;
+}
+
+void
+propagate_waveform_cmd(const char *min_max_name)
+{
+  Sta *sta = Sta::sta();
+  sta->ensureLibLinked();
+  const MinMax *min_max = MinMax::find(min_max_name);
+  if (!min_max)
+    min_max = MinMax::max();
+  Corner *corner = nullptr;
+  if (sta->corners()->count() > 0)
+    corner = sta->corners()->findCorner(0);
+  if (!corner) {
+    sta->report()->warn(1472, "No corner defined.");
+    return;
+  }
+  propagateWaveform(corner, min_max, sta);
 }
 
 %} // inline

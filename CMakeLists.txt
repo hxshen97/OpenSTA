@@ -141,6 +141,8 @@ set(STA_SOURCE
 
   waveform/SignalWaveform.cc
   waveform/WaveformReader.cc
+  waveform/Aig.cc
+  waveform/WaveformPropagate.cc
 
   sdc/Clock.cc
   sdc/ClockGatingCheck.cc
